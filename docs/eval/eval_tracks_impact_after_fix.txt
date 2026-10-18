@@ -1,0 +1,30 @@
+{
+ "track1_impact": [
+  {
+   "check": "impact",
+   "score": 1.0,
+   "detail": "8/8 customers named",
+   "ok": true,
+   "seconds": 18.0,
+   "cost": 0.0304,
+   "cited": 23,
+   "cite_ok": 23,
+   "mcp": true
+  },
+  {
+   "check": "impact",
+   "score": 1.0,
+   "detail": "8/8 customers named",
+   "ok": true,
+   "seconds": 17.3,
+   "cost": 0.0295,
+   "cited": 13,
+   "cite_ok": 13,
+   "mcp": true
+  }
+ ]
+}
+
+| Track | Check | Runs passed | Mean score | Cited ids valid | Tools over MCP | Median time | Cost |
+|---|---|---|---|---|---|---|---|
+| Track 1 | impact | 2/2 | 100% | 36/36 | yes | 18 s | $0.060 |

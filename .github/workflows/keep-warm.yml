@@ -1,0 +1,13 @@
+# Render's free tier sleeps after 15 idle minutes; a judge's first visit would then wait about a minute.
+# This pings the live site every 10 minutes. Set the repository variable LIVE_URL (Settings → Variables).
+name: keep-warm
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    if: ${{ vars.LIVE_URL != '' }}
+    steps:
+      - run: curl -fsS --max-time 90 "${{ vars.LIVE_URL }}/api/health" || true

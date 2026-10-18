@@ -1,0 +1,52 @@
+{
+ "track2_memory": [
+  {
+   "check": "memory",
+   "score": 1.0,
+   "ok": true,
+   "detail": {
+    "lesson saved": true,
+    "new runbook version proposed": true,
+    "different session": true,
+    "new session uses RECONNECT": true,
+    "says it remembered": true,
+    "cites the new version": true,
+    "handoff: tasks created and all done": true
+   },
+   "proposals": [
+    "RB-7-v2"
+   ],
+   "seconds": 38.9,
+   "cost": 0.06709999999999999,
+   "cited": 13,
+   "cite_ok": 13,
+   "mcp": true
+  },
+  {
+   "check": "memory",
+   "score": 1.0,
+   "ok": true,
+   "detail": {
+    "lesson saved": true,
+    "new runbook version proposed": true,
+    "different session": true,
+    "new session uses RECONNECT": true,
+    "says it remembered": true,
+    "cites the new version": true,
+    "handoff: tasks created and all done": true
+   },
+   "proposals": [
+    "RB-7-v2"
+   ],
+   "seconds": 34.4,
+   "cost": 0.0765,
+   "cited": 15,
+   "cite_ok": 15,
+   "mcp": true
+  }
+ ]
+}
+
+| Track | Check | Runs passed | Mean score | Cited ids valid | Tools over MCP | Median time | Cost |
+|---|---|---|---|---|---|---|---|
+| Track 2 | memory | 2/2 | 100% | 28/28 | yes | 37 s | $0.144 |

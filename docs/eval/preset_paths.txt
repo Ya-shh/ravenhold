@@ -1,0 +1,270 @@
+[
+ {
+  "question": "Live incident",
+  "steps": [
+   "commander:declare_incident({\"title\":\"Checkout 5xx and payments-api connection timeouts\",\"service_id\":\"payme)",
+   "commander:delegate({\"tasks\":[{\"agent\":\"investigator\",\"instructions\":\"Symptom service: payments-api.)",
+   "investigator:root_cause_candidates({\"service_id\":\"payments-api\"})",
+   "investigator:blast_radius({\"service_id\":\"payments-api\"})",
+   "historian:similar_incidents({\"service_id\":\"payments-api\",\"description\":\"checkout 5xx connection timeouts\"})",
+   "historian:graph_query({\"cypher\":\"MATCH (s:Service {id:'payments-api'})-[:DEPENDS_ON]->(d:Service) RETU)",
+   "historian:recall_memory({\"service_ids\":[\"payments-api\"]})",
+   "investigator:blast_radius({\"service_id\":\"payments-db\"})",
+   "investigator:find_experts({\"service_id\":\"payments-db\"})",
+   "investigator:find_experts({\"service_id\":\"pgbouncer\"})",
+   "investigator:open_follow_ups({\"service_id\":\"payments-db\"})",
+   "historian:recall_memory({\"service_ids\":[\"pgbouncer\",\"kafka\",\"ledger-service\",\"card-gateway\",\"fraud-score)",
+   "historian:get_runbook({\"runbook_id\":\"RB-7\"})",
+   "historian:get_runbook({\"runbook_id\":\"RB-9\"})",
+   "historian:get_runbook({\"runbook_id\":\"RB-15\"})",
+   "historian:graph_query({\"cypher\":\"MATCH (i:Incident {id:'INC-301'}) OPTIONAL MATCH (i)-[:ROOT_CAUSE|AFF)",
+   "commander:page_person({\"person_id\":\"claire\",\"incident_id\":\"INC-301\",\"message\":\"INC-301: checkout 5xx a)",
+   "commander:page_person({\"person_id\":\"marcus\",\"incident_id\":\"INC-301\",\"message\":\"INC-301: you are on-cal)"
+  ],
+  "expected_tools": [
+   "find_experts",
+   "root_cause_candidates",
+   "similar_incidents"
+  ],
+  "missing_tools": [],
+  "must_mention": [
+   "pgbouncer",
+   "Claire"
+  ],
+  "missing_facts": [],
+  "citations": {
+   "verified": [
+    "INC-120",
+    "INC-142",
+    "INC-171",
+    "INC-301",
+    "RB-7",
+    "RB-9",
+    "TKT-512",
+    "TKT-530",
+    "claire",
+    "marcus",
+    "payments-db",
+    "pgbouncer",
+    "thomas"
+   ],
+   "unknown": []
+  },
+  "latency_s": 27.6,
+  "cost_usd": 0.0465,
+  "answer_start": "**In plain words:** Customers can't reliably pay at checkout. The likeliest cause is that the payment system's database connections are jammed, so requests time out. This looks like an outage we had in March.\n\n**Verdict:** Likely database connection exhaustion at the pool layer. I'm moderately confident, because the graph shows no live fault. I declared [INC-301].\n\n**Likely root cause**\n- Top hypo"
+ },
+ {
+  "question": "Impact",
+  "steps": [
+   "commander:delegate({\"tasks\":[{\"agent\":\"investigator\",\"instructions\":\"Run blast_radius on payments-d)",
+   "investigator:blast_radius({\"service_id\":\"payments-db\"})",
+   "investigator:find_experts({\"service_id\":\"payments-db\"})"
+  ],
+  "expected_tools": [
+   "blast_radius"
+  ],
+  "missing_tools": [],
+  "must_mention": [
+   "$"
+  ],
+  "missing_facts": [],
+  "citations": {
+   "verified": [
+    "INC-120",
+    "INC-142",
+    "INC-171",
+    "claire",
+    "ledger-service",
+    "marcus",
+    "merchant-dashboard",
+    "mobile-bff",
+    "payments-api",
+    "payouts-service",
+    "pgbouncer",
+    "promo-engine",
+    "referral-service",
+    "reporting-api",
+    "thomas"
+   ],
+   "unknown": []
+  },
+  "latency_s": 15.7,
+  "cost_usd": 0.0282,
+  "answer_start": "**In plain words:** If the main payments database fails, card payments, payouts, the merchant dashboard and the mobile app would all stop working or break. Eight customers would be hurt.\n\n**Verdict: payments-db is a Tier 0 single point of failure, with $5,375,000 ARR at risk.**\n\n**Impact**\n- **Services (9):**\n  - Tier 0: [pgbouncer], [ledger-service], [payments-api].\n  - Tier 1: [payouts-service],"
+ },
+ {
+  "question": "Expertise",
+  "steps": [
+   "commander:delegate({\"tasks\":[{\"agent\":\"investigator\",\"instructions\":\"Run find_experts on pgbouncer )",
+   "investigator:find_experts({\"service_id\":\"pgbouncer\"})",
+   "investigator:graph_query({\"cypher\":\"MATCH (t:Team)-[:OWNS]->(s:Service {id:'pgbouncer'}) OPTIONAL MATCH ()"
+  ],
+  "expected_tools": [
+   "find_experts"
+  ],
+  "missing_tools": [],
+  "must_mention": [
+   "Claire"
+  ],
+  "missing_facts": [],
+  "citations": {
+   "verified": [
+    "DD-18",
+    "INC-142",
+    "PM-142",
+    "claire",
+    "daniel",
+    "hannah",
+    "james",
+    "platform"
+   ],
+   "unknown": []
+  },
+  "latency_s": 13.7,
+  "cost_usd": 0.0253,
+  "answer_start": "**In plain words:** [claire] knows the database connection manager (pgbouncer) best, but she isn't the person officially on call. [james] is on call, and he has no history with it.\n\n**Verdict:** Go to [claire] for expertise and keep [james] in the loop as the on-call.\n\n**Who knows it**\n- [claire] is the strongest. She has 64 commits, the latest on 2026-09-30. She resolved [INC-142] and wrote [PM-1"
+ },
+ {
+  "question": "Projects",
+  "steps": [
+   "commander:project_overview({\"team_id\":\"platform\"})"
+  ],
+  "expected_tools": [
+   "project_overview"
+  ],
+  "missing_tools": [],
+  "must_mention": [
+   "TKT-512",
+   "Claire"
+  ],
+  "missing_facts": [],
+  "citations": {
+   "verified": [
+    "ADR-19",
+    "INC-142",
+    "INC-201",
+    "TKT-512",
+    "TKT-513",
+    "TKT-560",
+    "claire",
+    "daniel",
+    "james",
+    "marcus",
+    "pgbouncer",
+    "sophie"
+   ],
+   "unknown": []
+  },
+  "latency_s": 7.2,
+  "cost_usd": 0.0252,
+  "answer_start": "**In plain words:** The Platform team has two projects running. One is meant to stop a past payment outage from coming back, and its last task is stuck with someone who doesn't know that system.\n\n**Verdict:** Yes. PRJ-POOL is at risk, and PRJ-FRAUD-REDIS has a smaller risk.\n\n**PRJ-POOL (PgBouncer pool hardening)**\n- It is in progress and led by [daniel]. The members are [daniel], [james] and [marc"
+ },
+ {
+  "question": "Decisions",
+  "steps": [
+   "commander:trace_decisions({\"service_id\":\"ledger-service\"})"
+  ],
+  "expected_tools": [
+   "trace_decisions"
+  ],
+  "missing_tools": [],
+  "must_mention": [
+   "ADR-"
+  ],
+  "missing_facts": [],
+  "citations": {
+   "verified": [
+    "ADR-12",
+    "ADR-15",
+    "DD-31",
+    "INC-142",
+    "MSG-5",
+    "MSG-6",
+    "PM-098",
+    "PM-142",
+    "claire",
+    "hannah",
+    "helen"
+   ],
+   "unknown": []
+  },
+  "latency_s": 6.4,
+  "cost_usd": 0.0243,
+  "answer_start": "**In plain words:** The payments team moved ledger writes onto a queue (Kafka) because writing them directly was using up about half of the payment database's connections. That was making the database overloaded.\n\n**Verdict:** The decision is [ADR-12], \"Ledger writes go async through Kafka\". It was accepted on 2026-03-25 and made by Helen Carter [helen].\n\n**How it was decided**\n1. [MSG-5] in #team"
+ },
+ {
+  "question": "Risk",
+  "steps": [
+   "commander:critical_services({})"
+  ],
+  "expected_tools": [
+   "critical_services"
+  ],
+  "missing_tools": [],
+  "must_mention": [],
+  "missing_facts": [],
+  "citations": {
+   "verified": [
+    "api-gateway",
+    "auth-service",
+    "fraud-scorer",
+    "kafka",
+    "kyc-service",
+    "ledger-service",
+    "merchant-dashboard",
+    "mobile-bff",
+    "observability",
+    "payments-api",
+    "payments-db",
+    "payouts-service",
+    "pgbouncer",
+    "secrets-vault",
+    "user-db",
+    "warehouse"
+   ],
+   "unknown": []
+  },
+  "latency_s": 6.5,
+  "cost_usd": 0.0254,
+  "answer_start": "**In plain words:** A few core systems hold up most of the company. If one of them fails, many other services fail with it, and that includes payments.\n\n**Verdict: Kafka, payments-db, and pgbouncer are the biggest single points of failure. payments-api and auth-service are the biggest chokepoints.** These rankings come from graph algorithms (PageRank and betweenness).\n\n**Most depended on (PageRank"
+ },
+ {
+  "question": "Vague report",
+  "steps": [
+   "commander:situation_report({\"money_usd\":1000000,\"keywords\":\"losing money\"})",
+   "commander:correlate_alerts({})"
+  ],
+  "expected_tools": [
+   "situation_report"
+  ],
+  "missing_tools": [],
+  "must_mention": [],
+  "missing_facts": [],
+  "citations": {
+   "verified": [
+    "INC-142",
+    "INC-171",
+    "INC-193",
+    "INC-201",
+    "TKT-512",
+    "TKT-530",
+    "TKT-560"
+   ],
+   "unknown": []
+  },
+  "latency_s": 7.9,
+  "cost_usd": 0.0294,
+  "answer_start": "**In plain words:** Nothing in our monitoring is broken right now. I can't find a cause for the million dollars, and I need a bit more information from you.\n\n**Verdict:** No firing alerts, no active incidents and no degraded services. I can't tie the loss to a live outage.\n\n**What the graph shows**\n- Exposure: four customers are large enough to account for $1M on their own. They are Orbit Rides ($"
+ }
+]
+
+| Question | Path taken (tools) | Expected tools called | Facts present | Cost |
+|---|---|---|---|---|
+| Live incident | commander:declare_incident → commander:delegate → investigator:root_cause_candidates → investigator:blast_radius → historian:similar_incidents → historian:graph_query → historian:recall_memory → investigator:find_experts → investigator:open_follow_ups → historian:get_runbook → commander:page_person | yes | yes | $0.046 |
+| Impact | commander:delegate → investigator:blast_radius → investigator:find_experts | yes | yes | $0.028 |
+| Expertise | commander:delegate → investigator:find_experts → investigator:graph_query | yes | yes | $0.025 |
+| Projects | commander:project_overview | yes | yes | $0.025 |
+| Decisions | commander:trace_decisions | yes | yes | $0.024 |
+| Risk | commander:critical_services | yes | yes | $0.025 |
+| Vague report | commander:situation_report → commander:correlate_alerts | yes | yes | $0.029 |

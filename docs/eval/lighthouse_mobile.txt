@@ -1,0 +1,13 @@
+Lighthouse 12, mobile form factor, simulated throttling, against the production build served by the API (gzip on).
+URL: local production build (same bundle as the live site at the time). Date: 2026-10-18.
+
+Performance: 98
+Accessibility: 100
+Best Practices: 100
+SEO: 100
+
+First Contentful Paint: 1.4 s
+Largest Contentful Paint: 2.1 s
+Total Blocking Time: 0 ms
+Cumulative Layout Shift: 0
+Speed Index: 1.4 s

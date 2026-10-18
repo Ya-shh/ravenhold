@@ -1,0 +1,11 @@
+built 11,357 nodes / 49,008 relationships in 1s
+
+| Query (11,357 nodes, 49,008 relationships, 57-alert storm) | Median time |
+|---|---|
+| Alert storm → root cause (correlate_alerts) | 39 ms |  <!-- 57 alerts on 56 services: 56 trace back to svc-4110; 1 looks unrelated -->
+| Blast radius, deep infrastructure service | 683 ms |
+| Blast radius, mid-stack service | 34 ms |
+| Root-cause candidates (walk down 4 hops) | 58 ms |
+| Who knows this system (find_experts) | 191 ms |
+| Similar past incidents | 14 ms |
+| PageRank + betweenness + WCC | 147 ms |
