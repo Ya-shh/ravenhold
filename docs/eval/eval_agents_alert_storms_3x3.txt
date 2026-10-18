@@ -1,0 +1,170 @@
+[
+ {
+  "scenario": "pool-exhaustion",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "claire"
+  ],
+  "experts": [
+   "claire",
+   "daniel"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 26.5,
+  "cost_usd": 0.054,
+  "tool_calls": 15
+ },
+ {
+  "scenario": "pool-exhaustion",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "claire"
+  ],
+  "experts": [
+   "claire",
+   "daniel"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 24.9,
+  "cost_usd": 0.0527,
+  "tool_calls": 14
+ },
+ {
+  "scenario": "pool-exhaustion",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "claire",
+   "james"
+  ],
+  "experts": [
+   "claire",
+   "daniel"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 26.6,
+  "cost_usd": 0.0563,
+  "tool_calls": 16
+ },
+ {
+  "scenario": "broker-loss",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "daniel"
+  ],
+  "experts": [
+   "daniel",
+   "hannah"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 24.2,
+  "cost_usd": 0.0513,
+  "tool_calls": 13
+ },
+ {
+  "scenario": "broker-loss",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "daniel"
+  ],
+  "experts": [
+   "daniel",
+   "hannah"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 25.3,
+  "cost_usd": 0.0394,
+  "tool_calls": 16
+ },
+ {
+  "scenario": "broker-loss",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "daniel"
+  ],
+  "experts": [
+   "daniel",
+   "hannah"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 22.9,
+  "cost_usd": 0.0379,
+  "tool_calls": 15
+ },
+ {
+  "scenario": "cache-evictions",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "james"
+  ],
+  "experts": [
+   "james",
+   "alice"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 25.7,
+  "cost_usd": 0.0522,
+  "tool_calls": 16
+ },
+ {
+  "scenario": "cache-evictions",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "james"
+  ],
+  "experts": [
+   "james",
+   "alice"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 30.2,
+  "cost_usd": 0.0525,
+  "tool_calls": 16
+ },
+ {
+  "scenario": "cache-evictions",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "james",
+   "alice"
+  ],
+  "experts": [
+   "james",
+   "alice"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 29.4,
+  "cost_usd": 0.0354,
+  "tool_calls": 17
+ }
+]
+
+| Commander effort | Runs | Root cause correct | Right person paged | Noise called out | Cited ids valid | Latency median (max) | Cost per answer (median) |
+|---|---|---|---|---|---|---|---|
+| low | 9 | 9/9 | 9/9 | 9/9 | 100% | 26 s (30 s) | $0.052 |

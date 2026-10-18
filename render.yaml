@@ -1,0 +1,30 @@
+# Render Blueprint: one web service (UI + API) built from the Dockerfile.
+# Secrets marked sync:false are entered in the Render dashboard, never committed.
+services:
+  - type: web
+    name: ravenhold
+    runtime: docker
+    plan: free
+    region: singapore   # nearest Render region to the FalkorDB Cloud instance (AWS ap-south-1)
+    healthCheckPath: /api/health
+    envVars:
+      - key: FALKORDB_HOST         # FalkorDB Cloud instance
+        sync: false
+      - key: FALKORDB_PORT
+        sync: false
+      - key: FALKORDB_USERNAME
+        sync: false
+      - key: FALKORDB_PASSWORD
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: LLM_PROVIDER
+        value: anthropic
+      - key: RAVENHOLD_MODEL
+        value: claude-sonnet-5-5
+      - key: RAVENHOLD_WORKER_MODEL
+        value: claude-haiku-5-5
+      - key: RAVENHOLD_BUDGET_USD  # spend guard; Render re-applies this on every push, so change it here, not in the dashboard
+        value: "7.00"
+      - key: ADMIN_TOKEN           # needed to use Reset on the public site (open the site once with ?admin=<token>)
+        generateValue: true

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Ravenhold: incident-response agents that work from a living company graph and remember what they learn." />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0E1116" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F5F6F8" media="(prefers-color-scheme: light)" />
+    <title>Ravenhold</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      // Set the theme before first paint so there is no flash. Saved choice wins, else follow the device.
+      (function () {
+        var p = null
+        try { p = localStorage.getItem('rh.theme') } catch (e) {}
+        var t = p === 'light' || p === 'dark' ? p : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.documentElement.dataset.theme = t
+        document.documentElement.style.colorScheme = t
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

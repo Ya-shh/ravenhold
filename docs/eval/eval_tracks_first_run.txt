@@ -1,0 +1,327 @@
+{
+ "track1_impact": [
+  {
+   "check": "impact",
+   "score": 0.0,
+   "detail": "0/8 customers named",
+   "ok": false,
+   "seconds": 15.3,
+   "cost": 0.0272,
+   "cited": 21,
+   "cite_ok": 21,
+   "mcp": true
+  },
+  {
+   "check": "impact",
+   "score": 1.0,
+   "detail": "8/8 customers named",
+   "ok": true,
+   "seconds": 21.2,
+   "cost": 0.0314,
+   "cited": 24,
+   "cite_ok": 24,
+   "mcp": true
+  }
+ ],
+ "track2_memory": [
+  {
+   "check": "memory",
+   "score": 0.8571428571428571,
+   "ok": false,
+   "detail": {
+    "lesson saved": true,
+    "new runbook version proposed": true,
+    "different session": true,
+    "new session uses RECONNECT": true,
+    "says it remembered": false,
+    "cites the new version": true,
+    "handoff: tasks created and all done": true
+   },
+   "proposals": [
+    "RB-7-v2"
+   ],
+   "seconds": 30.900000000000002,
+   "cost": 0.0811,
+   "cited": 13,
+   "cite_ok": 13,
+   "mcp": true
+  },
+  {
+   "check": "memory",
+   "score": 0.8571428571428571,
+   "ok": false,
+   "detail": {
+    "lesson saved": true,
+    "new runbook version proposed": true,
+    "different session": true,
+    "new session uses RECONNECT": true,
+    "says it remembered": false,
+    "cites the new version": true,
+    "handoff: tasks created and all done": true
+   },
+   "proposals": [
+    "RB-7-v2"
+   ],
+   "seconds": 32.5,
+   "cost": 0.0809,
+   "cited": 12,
+   "cite_ok": 12,
+   "mcp": true
+  }
+ ],
+ "track3_questions": [
+  {
+   "check": "projects",
+   "score": 1.0,
+   "ok": true,
+   "detail": {
+    "TKT-512": true,
+    "Marcus holds it": true,
+    "Claire knows it": true,
+    "ADR-19 pending": true,
+    "overdue": true
+   },
+   "seconds": 6.2,
+   "cost": 0.0254,
+   "cited": 15,
+   "cite_ok": 15,
+   "mcp": true,
+   "tools": [
+    "project_overview"
+   ]
+  },
+  {
+   "check": "experts",
+   "score": 1.0,
+   "ok": true,
+   "detail": {
+    "top expert (Claire)": true,
+    "on-call (James)": true
+   },
+   "seconds": 12.4,
+   "cost": 0.026,
+   "cited": 5,
+   "cite_ok": 5,
+   "mcp": true,
+   "tools": [
+    "graph_query",
+    "graph_query",
+    "graph_query",
+    "find_experts",
+    "delegate"
+   ]
+  },
+  {
+   "check": "decisions",
+   "score": 1.0,
+   "ok": true,
+   "detail": {
+    "ADR-12": true,
+    "source MSG-6": true,
+    "source MSG-5": true,
+    "source DD-31": true,
+    "source PM-142": true
+   },
+   "seconds": 6.3,
+   "cost": 0.0249,
+   "cited": 12,
+   "cite_ok": 12,
+   "mcp": true,
+   "tools": [
+    "trace_decisions"
+   ]
+  },
+  {
+   "check": "projects",
+   "score": 1.0,
+   "ok": true,
+   "detail": {
+    "TKT-512": true,
+    "Marcus holds it": true,
+    "Claire knows it": true,
+    "ADR-19 pending": true,
+    "overdue": true
+   },
+   "seconds": 6.0,
+   "cost": 0.0255,
+   "cited": 17,
+   "cite_ok": 17,
+   "mcp": true,
+   "tools": [
+    "project_overview"
+   ]
+  },
+  {
+   "check": "experts",
+   "score": 1.0,
+   "ok": true,
+   "detail": {
+    "top expert (Claire)": true,
+    "on-call (James)": true
+   },
+   "seconds": 12.4,
+   "cost": 0.0255,
+   "cited": 6,
+   "cite_ok": 6,
+   "mcp": true,
+   "tools": [
+    "graph_query",
+    "find_experts",
+    "delegate"
+   ]
+  },
+  {
+   "check": "decisions",
+   "score": 1.0,
+   "ok": true,
+   "detail": {
+    "ADR-12": true,
+    "source MSG-6": true,
+    "source MSG-5": true,
+    "source DD-31": true,
+    "source PM-142": true
+   },
+   "seconds": 6.1,
+   "cost": 0.0242,
+   "cited": 12,
+   "cite_ok": 12,
+   "mcp": true,
+   "tools": [
+    "trace_decisions"
+   ]
+  }
+ ],
+ "track3_updates": [
+  {
+   "statement": "Claire takes over TKT-512 and joins the PgBouncer pool hardening project.",
+   "before": false,
+   "after": true,
+   "changes": 2,
+   "expected": 2,
+   "ok": true,
+   "seconds": 1.8
+  },
+  {
+   "statement": "James takes over Payments on-call this week.",
+   "before": false,
+   "after": true,
+   "changes": 1,
+   "expected": 1,
+   "ok": true,
+   "seconds": 2.0
+  },
+  {
+   "statement": "Hannah is moving to the Platform team starting today.",
+   "before": false,
+   "after": true,
+   "changes": 1,
+   "expected": 1,
+   "ok": true,
+   "seconds": 1.3
+  },
+  {
+   "statement": "From now on the Data team owns promo-engine.",
+   "before": false,
+   "after": true,
+   "changes": 1,
+   "expected": 1,
+   "ok": true,
+   "seconds": 1.1
+  },
+  {
+   "statement": "Sophie is leaving the fraud Redis project.",
+   "before": false,
+   "after": true,
+   "changes": 1,
+   "expected": 1,
+   "ok": true,
+   "seconds": 1.2
+  },
+  {
+   "statement": "The index safety checks project is now due on 2026-12-20.",
+   "before": false,
+   "after": true,
+   "changes": 1,
+   "expected": 1,
+   "ok": true,
+   "seconds": 1.3
+  },
+  {
+   "statement": "ledger-service now also depends on session-cache.",
+   "before": false,
+   "after": true,
+   "changes": 1,
+   "expected": 1,
+   "ok": true,
+   "seconds": 1.1
+  },
+  {
+   "statement": "TKT-530 is done.",
+   "before": false,
+   "after": true,
+   "changes": 1,
+   "expected": 1,
+   "ok": true,
+   "seconds": 1.8
+  },
+  {
+   "statement": "Lunch is at noon on Friday, see you all there.",
+   "before": false,
+   "after": true,
+   "changes": 0,
+   "expected": 0,
+   "ok": true,
+   "seconds": 1.2
+  }
+ ],
+ "track3_after_update": [
+  {
+   "check": "projects after 'Claire takes over TKT-512'",
+   "ok": true,
+   "score": 1.0,
+   "detail": {
+    "TKT-512 risk gone": true,
+    "names Claire": true
+   },
+   "seconds": 7.2,
+   "cost": 0.011,
+   "cited": 16,
+   "cite_ok": 16,
+   "mcp": true
+  },
+  {
+   "check": "projects after 'Claire takes over TKT-512'",
+   "ok": true,
+   "score": 1.0,
+   "detail": {
+    "TKT-512 risk gone": true,
+    "names Claire": true
+   },
+   "seconds": 6.2,
+   "cost": 0.0106,
+   "cited": 11,
+   "cite_ok": 11,
+   "mcp": true
+  }
+ ]
+}
+
+| Track | Check | Runs passed | Mean score | Cited ids valid | Tools over MCP | Median time | Cost |
+|---|---|---|---|---|---|---|---|
+| Track 1 | impact | 1/2 | 50% | 45/45 | yes | 18 s | $0.059 |
+| Track 2 | memory | 0/2 | 86% | 25/25 | yes | 32 s | $0.162 |
+| Track 3 | projects | 2/2 | 100% | 32/32 | yes | 6 s | $0.051 |
+| Track 3 | experts | 2/2 | 100% | 11/11 | yes | 12 s | $0.051 |
+| Track 3 | decisions | 2/2 | 100% | 24/24 | yes | 6 s | $0.049 |
+| Track 3 | projects after 'Claire takes over TKT-512' | 2/2 | 100% | 27/27 | yes | 7 s | $0.022 |
+
+Knowledge updates: 9/9 statements applied exactly (target false before, true after, no extra changes)
+  ✅ Claire takes over TKT-512 and joins the PgBouncer pool hardening project.  (before=False, after=True, changes=2/2)
+  ✅ James takes over Payments on-call this week.  (before=False, after=True, changes=1/1)
+  ✅ Hannah is moving to the Platform team starting today.  (before=False, after=True, changes=1/1)
+  ✅ From now on the Data team owns promo-engine.  (before=False, after=True, changes=1/1)
+  ✅ Sophie is leaving the fraud Redis project.  (before=False, after=True, changes=1/1)
+  ✅ The index safety checks project is now due on 2026-12-20.  (before=False, after=True, changes=1/1)
+  ✅ ledger-service now also depends on session-cache.  (before=False, after=True, changes=1/1)
+  ✅ TKT-530 is done.  (before=False, after=True, changes=1/1)
+  ✅ Lunch is at noon on Friday, see you all there.  (before=False, after=True, changes=0/0)

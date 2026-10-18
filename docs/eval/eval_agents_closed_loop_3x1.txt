@@ -1,0 +1,72 @@
+[
+ {
+  "scenario": "pool-exhaustion",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "claire"
+  ],
+  "experts": [
+   "claire",
+   "daniel"
+  ],
+  "fix_ok": true,
+  "fix_on": [
+   "pgbouncer"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 26.8,
+  "cost_usd": 0.0369,
+  "tool_calls": 15
+ },
+ {
+  "scenario": "broker-loss",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "daniel"
+  ],
+  "experts": [
+   "daniel",
+   "hannah"
+  ],
+  "fix_ok": true,
+  "fix_on": [
+   "kafka"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 25.8,
+  "cost_usd": 0.0555,
+  "tool_calls": 13
+ },
+ {
+  "scenario": "cache-evictions",
+  "root_ok": true,
+  "person_ok": true,
+  "paged": [
+   "james"
+  ],
+  "experts": [
+   "james",
+   "alice"
+  ],
+  "fix_ok": true,
+  "fix_on": [
+   "session-cache"
+  ],
+  "noise_ok": true,
+  "citations_valid": 1.0,
+  "unknown_ids": [],
+  "latency_s": 32.1,
+  "cost_usd": 0.0575,
+  "tool_calls": 17
+ }
+]
+
+| Commander effort | Runs | Root cause correct | Right person paged | Noise called out | Cited ids valid | Right fix proposed | Latency median (max) | Cost per answer (median) |
+|---|---|---|---|---|---|---|---|---|
+| low | 3 | 3/3 | 3/3 | 3/3 | 100% | 3/3 | 27 s (32 s) | $0.056 |

@@ -1,0 +1,12 @@
+.DS_Store
+.env
+.next/
+.venv/
+__pycache__/
+backend/usage.jsonl
+backend/usage.jsonl*
+node_modules/
+CLAUDE.md
+blog-post.md
+video-script.md
+submission.md

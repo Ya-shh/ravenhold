@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ravenhold diagrams</title>
+<!-- Source for the blog diagrams. Rendered to PNG with Playwright (one screenshot per <section>). -->
+<style>
+  @font-face { font-family: 'Inter'; font-weight: 100 900; src: url('../../frontend/public/fonts/inter-latin-var.woff2') format('woff2'); }
+  :root {
+    --bg: #0e1116; --surface: #151a21; --surface-2: #1c222b; --line: #353e4c; --line-soft: #262d38;
+    --text: #e6e9ee; --text-2: #b3bbc7; --muted: #8f99a8; --primary: #8ea6ff;
+    --c: #a78bfa; --i: #38bdf8; --h: #f5a524; --ok: #5fcf8e; --warn: #e9b949; --err: #f38187;
+    --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #2a2f38; font-family: Inter, system-ui, sans-serif; color: var(--text); -webkit-font-smoothing: antialiased; }
+  section { width: 1400px; padding: 44px 48px 40px; margin: 0 0 40px; background: var(--bg); }
+  h1 { font-size: 34px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .sub { color: var(--text-2); font-size: 17px; margin: 0 0 32px; max-width: 980px; line-height: 1.5; }
+  .k { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .card { background: var(--surface); border: 1px solid var(--line-soft); border-radius: 14px; padding: 16px 18px; }
+  .card b { display: block; font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .card span { color: var(--text-2); font-size: 14.5px; line-height: 1.45; display: block; }
+  .mono { font-family: var(--mono); }
+  code { font-family: var(--mono); font-size: 13px; color: var(--primary); }
+  .arrow { color: var(--primary); font-size: 28px; display: flex; align-items: center; justify-content: center; }
+  .tag { display: inline-block; font-size: 12.5px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid var(--line); color: var(--text-2); margin: 3px 4px 0 0; }
+  .agent { border-width: 1.5px; }
+  .agent.c { border-color: color-mix(in srgb, var(--c) 60%, transparent); background: linear-gradient(color-mix(in srgb, var(--c) 9%, transparent), transparent), var(--surface); }
+  .agent.i { border-color: color-mix(in srgb, var(--i) 60%, transparent); background: linear-gradient(color-mix(in srgb, var(--i) 9%, transparent), transparent), var(--surface); }
+  .agent.h { border-color: color-mix(in srgb, var(--h) 60%, transparent); background: linear-gradient(color-mix(in srgb, var(--h) 9%, transparent), transparent), var(--surface); }
+  .av { width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 17px; flex: none; border: 1.5px solid; }
+  .av.c { color: var(--c); border-color: var(--c); background: color-mix(in srgb, var(--c) 15%, transparent); }
+  .av.i { color: var(--i); border-color: var(--i); background: color-mix(in srgb, var(--i) 15%, transparent); }
+  .av.h { color: var(--h); border-color: var(--h); background: color-mix(in srgb, var(--h) 15%, transparent); }
+  .card span.av { display: inline-flex; font-size: 17px; line-height: 1; }
+  .card span.av.c { color: var(--c); } .card span.av.i { color: var(--i); } .card span.av.h { color: var(--h); }
+  .card span.st { display: inline-block; margin-top: 6px; }
+  .card li > span:first-child { display: block; }
+  .who { display: flex; gap: 12px; align-items: center; }
+  .who b { font-size: 19px; margin: 0; }
+  .who em { font-style: normal; font-size: 13.5px; color: var(--muted); display: block; }
+
+  /* ---------- 1: how it works ---------- */
+  .flow { display: grid; grid-template-columns: 300px 56px 1fr 56px 320px; align-items: stretch; }
+  .col { display: flex; flex-direction: column; gap: 12px; }
+  .col .card { flex: 1; }
+  .team { display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+  .team .agent { padding: 18px 20px; }
+  .handoff { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; position: relative; }
+  .handoff-mid { display: flex; justify-content: space-around; color: var(--primary); font-size: 13.5px; font-weight: 600; }
+  .handoff-mid span { display: flex; align-items: center; gap: 6px; }
+  .down { display: flex; justify-content: center; align-items: center; gap: 10px; color: var(--primary); font-size: 14px; font-weight: 600; margin: 14px 0; }
+  .down i { font-style: normal; font-size: 24px; }
+  .graph { border: 1.5px solid color-mix(in srgb, var(--primary) 55%, transparent); border-radius: 18px; padding: 20px 22px; background: linear-gradient(color-mix(in srgb, var(--primary) 7%, transparent), transparent), var(--surface); }
+  .graph-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+  .graph-head b { font-size: 21px; font-weight: 600; }
+  .graph-head span { color: var(--text-2); font-size: 15px; }
+  .compart { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 12px; }
+  .compart .card { background: var(--surface-2); }
+  .compart .card b { font-size: 16px; }
+  .compart .card span { font-size: 13.5px; }
+  .chips { margin-top: 14px; }
+  .note { margin-top: 14px; color: var(--muted); font-size: 13.5px; }
+
+  /* ---------- 2: agents ---------- */
+  .agents3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .agents3 .agent { padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+  .agents3 .job { font-size: 16px; line-height: 1.45; color: var(--text); }
+  .agents3 ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .agents3 li { font-size: 14px; color: var(--text-2); line-height: 1.4; display: grid; grid-template-columns: 200px 1fr; gap: 10px; }
+  .agents3 li code { font-size: 13px; }
+  .agents3 .act li code { color: var(--warn); }
+  .lane { margin-top: 22px; }
+  .lane-row { display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr 40px 1fr; align-items: center; }
+  .lane .card b { font-size: 15.5px; }
+  .lane .card span { font-size: 13.5px; }
+  .st { font-family: var(--mono); font-size: 12.5px; font-weight: 600; padding: 2px 8px; border-radius: 99px; margin-right: 4px; }
+  .st.todo { background: #252c37; color: var(--text-2); } .st.run { background: rgba(142,166,255,.15); color: var(--primary); }
+  .st.done { background: rgba(95,207,142,.12); color: var(--ok); } .st.fail { background: rgba(243,129,135,.12); color: var(--err); }
+
+  /* ---------- 3: lifecycle ---------- */
+  .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; row-gap: 26px; }
+  .step { position: relative; padding-right: 30px; }
+  .step:not(.last)::after { content: '→'; position: absolute; right: 4px; top: 40%; color: var(--primary); font-size: 24px; }
+  .step .card { height: 100%; padding: 16px; }
+  .num { width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #0b1020; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+  .step .card b { font-size: 16.5px; }
+  .step .card span { font-size: 13.5px; }
+  .step .who-line { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .pill { font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 99px; }
+  .pill.c { color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); }
+  .pill.i { color: var(--i); background: color-mix(in srgb, var(--i) 14%, transparent); }
+  .pill.h { color: var(--h); background: color-mix(in srgb, var(--h) 14%, transparent); }
+  .pill.you { color: var(--ok); background: rgba(95,207,142,.12); }
+  .pill.g { color: var(--primary); background: rgba(142,166,255,.12); }
+  .human .card { border-color: rgba(95,207,142,.45); }
+  .loop { margin-top: 22px; display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 14px; border: 1.5px dashed color-mix(in srgb, var(--primary) 55%, transparent); color: var(--text-2); font-size: 15px; }
+  .loop i { font-style: normal; font-size: 26px; color: var(--primary); }
+  .loop b { color: var(--text); }
+  .legend { display: flex; gap: 14px; margin-top: 16px; color: var(--muted); font-size: 13.5px; align-items: center; }
+</style>
+</head>
+<body>
+
+<!-- 1 ------------------------------------------------------------------------------------------------------------- -->
+<section id="how-it-works">
+  <h1>How Ravenhold works</h1>
+  <p class="sub">Three AI agents answer incidents from one FalkorDB graph. The company map, their memory and the way they
+    hand work to each other are all nodes and edges, so every answer can be checked and every lesson is kept.</p>
+
+  <div class="flow">
+    <div class="col">
+      <div class="k">You</div>
+      <div class="card"><b>Alarms go off</b><span><em style="font-style:normal;color:var(--text)">Simulate incident</em> fires a realistic alert storm. Free.</span></div>
+      <div class="card"><b>Ask anything</b><span>"What breaks if payments-db goes down?" "Who knows pgbouncer?"</span></div>
+      <div class="card"><b>Correct the agents</b><span>"At peak traffic, reconnect the pool, don't pause it."</span></div>
+      <div class="card"><b>Paste what changed</b><span><em style="font-style:normal;color:var(--text)">Add knowledge</em>: "Sarah is moving to the Data team today."</span></div>
+    </div>
+    <div class="arrow">→</div>
+
+    <div class="team">
+      <div class="k" style="text-align:center">The agent team</div>
+      <div class="card agent c">
+        <div class="who"><span class="av c">C</span><div><b>Commander</b><em>Claude Sonnet 5.5 · the team lead</em></div></div>
+        <span style="margin-top:10px">Talks to you, splits up the work, then acts: opens the incident, asks to page the right
+          person, saves lessons.</span>
+      </div>
+      <div class="handoff-mid"><span>↓ writes a <code>(:Task)</code> node</span><span>↑ reads the result from the graph</span></div>
+      <div class="handoff">
+        <div class="card agent i">
+          <div class="who"><span class="av i">I</span><div><b>Investigator</b><em>Claude Haiku 5.5</em></div></div>
+          <span style="margin-top:10px">What broke, what else breaks, who can fix it.</span>
+        </div>
+        <div class="card agent h">
+          <div class="who"><span class="av h">H</span><div><b>Historian</b><em>Claude Haiku 5.5</em></div></div>
+          <span style="margin-top:10px">What happened before, what fixed it, what you taught it.</span>
+        </div>
+      </div>
+      <div style="text-align:center;color:var(--muted);font-size:13.5px">The two workers run in parallel</div>
+    </div>
+    <div class="arrow">→</div>
+
+    <div class="col">
+      <div class="k">What you get</div>
+      <div class="card"><b>A checked answer</b><span>Plain words first. Every id it cites is looked up in the graph; unknown ones are flagged.</span></div>
+      <div class="card" style="border-color:rgba(95,207,142,.45)"><b>You stay in charge</b><span>Pages and new runbook versions wait until you click Approve.</span></div>
+      <div class="card"><b>Every step shown</b><span>Who did what, each step in plain English, and the exact Cypher behind it.</span></div>
+      <div class="card"><b>Every cent shown</b><span>Each model call and its cost, with a server-side budget guard.</span></div>
+    </div>
+  </div>
+
+  <div class="down"><i>↕</i> 23 graph tools over MCP (<code>tools/list</code> · <code>tools/call</code>), each one a Cypher query or graph algorithm <i>↕</i></div>
+
+  <div class="graph">
+    <div class="graph-head"><b>FalkorDB: one graph holds everything</b><span>Each visitor gets a private copy in about 0.1 s (<code>GRAPH.COPY</code>)</span></div>
+    <div class="compart">
+      <div class="card"><b>Company map</b><span>Services and what they depend on, people and teams (with dates), projects, customers and
+        ARR, past incidents, runbooks, docs, chats, tickets, decisions</span></div>
+      <div class="card"><b>Memory</b><span>Lessons linked to the systems they apply to; runbook versions linked by <code>SUPERSEDES</code></span></div>
+      <div class="card"><b>Coordination</b><span>Tasks between agents, Episodes of what each worker read, sessions and turns with full traces</span></div>
+      <div class="card"><b>Where facts came from</b><span>Each pasted update is a <code>(:Change)</code> linked <code>FROM_SOURCE</code> to the text</span></div>
+    </div>
+    <div class="chips">
+      <span class="tag">Variable-length paths</span><span class="tag">PageRank · betweenness</span><span class="tag">Label propagation · WCC</span>
+      <span class="tag">Vector index (HNSW)</span><span class="tag">Full-text indexes</span><span class="tag">Temporal types</span>
+      <span class="tag">Unique constraints</span><span class="tag">GRAPH.RO_QUERY + timeouts</span>
+    </div>
+  </div>
+  <div class="note">The agents get their tools from Ravenhold's MCP server (a separate process over stdio); any MCP client, such as Claude Desktop, can use the same server. All demo data is synthetic.</div>
+</section>
+
+<!-- 2 ------------------------------------------------------------------------------------------------------------- -->
+<section id="agents">
+  <h1>How each agent works</h1>
+  <p class="sub">Each agent has its own job and its own graph tools, which it discovers from the MCP server's tool list and
+    calls over MCP. They never pass notes in memory: the Commander writes a task into the graph, a worker picks it up,
+    and writes its result back.</p>
+
+  <div class="agents3">
+    <div class="card agent c">
+      <div class="who"><span class="av c">C</span><div><b>Commander</b><em>Claude Sonnet 5.5 · talks to you</em></div></div>
+      <div class="job">Investigates first, splits the work, then acts. Writes the answer and cites the ids it used.</div>
+      <div><div class="k">Looks things up</div>
+        <ul>
+          <li><code>situation_report</code><span>big picture for vague reports</span></li>
+          <li><code>correlate_alerts</code><span>many alarms → one cause</span></li>
+          <li><code>critical_services</code><span>single points of failure</span></li>
+          <li><code>trace_decisions</code><span>why it was built this way</span></li>
+          <li><code>project_overview</code><span>who works on what, and what is at risk</span></li>
+          <li><code>recall_memory</code><span>lessons from earlier sessions</span></li>
+          <li><code>delegate</code><span>hands tasks to the workers</span></li>
+        </ul></div>
+      <div class="act"><div class="k">Takes action (written to the graph)</div>
+        <ul>
+          <li><code>declare_incident</code><span>opens INC-…</span></li>
+          <li><code>page_person</code><span>waits for your approval</span></li>
+          <li><code>propose_fix</code> · <code>check_recovery</code><span>apply the fix with approval, then verify recovery</span></li>
+          <li><code>record_lesson</code><span>may propose a new runbook version</span></li>
+          <li><code>update_knowledge</code><span>applies a fact you stated</span></li>
+          <li><span><code>create_ticket</code> · <code>resolve_incident</code></span><span>follow-ups and closing</span></li>
+        </ul></div>
+    </div>
+
+    <div class="card agent i">
+      <div class="who"><span class="av i">I</span><div><b>Investigator</b><em>Claude Haiku 5.5 · the detective</em></div></div>
+      <div class="job">Follows the dependency links to find what really broke, who is affected, and who actually knows it.</div>
+      <div><div class="k">Graph tools</div>
+        <ul>
+          <li><code>root_cause_candidates</code><span>walks DEPENDS_ON down, up to 4 hops</span></li>
+          <li><code>blast_radius</code><span>walks up to 6 hops to products, customers, ARR</span></li>
+          <li><code>find_experts</code><span>RESOLVED + CONTRIBUTED_TO vs who is ON_CALL</span></li>
+          <li><code>correlate_alerts</code><span>flags alarms that are unrelated noise</span></li>
+          <li><code>open_follow_ups</code><span>promised fixes never finished</span></li>
+          <li><code>critical_services</code><span>PageRank, betweenness</span></li>
+          <li><code>shortest_connection</code><span>how two things are linked</span></li>
+          <li><span><code>trace_decisions</code> · <code>graph_query</code></span><span>sources; read-only custom Cypher</span></li>
+        </ul></div>
+    </div>
+
+    <div class="card agent h">
+      <div class="who"><span class="av h">H</span><div><b>Historian</b><em>Claude Haiku 5.5 · the librarian</em></div></div>
+      <div class="job">Remembers every past problem, every written-down fix, and every lesson you have taught the team.</div>
+      <div><div class="k">Graph tools</div>
+        <ul>
+          <li><code>similar_incidents</code><span>graph neighbours + full-text + vector, scores added</span></li>
+          <li><code>get_runbook</code><span>newest approved version via SUPERSEDES</span></li>
+          <li><code>recall_memory</code><span>lessons linked to these systems</span></li>
+          <li><code>search_knowledge</code><span>docs, chats, tickets, lessons</span></li>
+          <li><code>trace_decisions</code><span>decision → chats and docs it came from</span></li>
+          <li><code>project_overview</code><span>projects, tickets, decisions, risks</span></li>
+          <li><span><code>open_follow_ups</code> · <code>graph_query</code></span><span>open to-dos; read-only custom Cypher</span></li>
+        </ul></div>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="k">How a handoff works (shown live in the Steps tab as "Who is doing what")</div>
+    <div class="lane-row">
+      <div class="card"><b>1 · Commander delegates</b><span><code>(:Agent)-[:DELEGATED]-&gt;(:Task)-[:ASSIGNED_TO]-&gt;(:Agent)</code><br><span class="st todo">todo</span></span></div>
+      <div class="arrow">→</div>
+      <div class="card"><b>2 · Worker picks it up</b><span>Reads its instructions from the graph, in its own thread<br><span class="st run">running</span></span></div>
+      <div class="arrow">→</div>
+      <div class="card"><b>3 · Worker writes back</b><span><code>t.result</code> plus an <code>(:Episode)-[:TOUCHED]-&gt;</code> every node it read<br><span class="st done">done</span><span class="st fail">failed</span></span></div>
+      <div class="arrow">→</div>
+      <div class="card"><b>4 · Commander reads it</b><span>With Cypher, not from Python memory. A failed task doesn't stop the run.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ------------------------------------------------------------------------------------------------------------- -->
+<section id="incident">
+  <h1>One incident, start to finish</h1>
+  <p class="sub">The 2 AM checkout outage from the demo, as it ran on the live site: about 30 seconds and $0.03 from
+    "Investigate" to a checked answer, with a human approving anything that matters.</p>
+
+  <div class="steps">
+    <div class="step"><div class="card"><div class="num">1</div><b>Alarms go off</b>
+      <span>13 alarms in 10 systems. Checkout, payouts and the mobile app are failing.</span>
+      <div class="who-line"><span class="pill you">you: Simulate</span></div></div></div>
+    <div class="step"><div class="card"><div class="num">2</div><b>Trace to one cause</b>
+      <span>Walk <code>DEPENDS_ON</code>: 12 alarms come from pgbouncer. The email-sender alarm is unrelated noise.</span>
+      <div class="who-line"><span class="pill c">Commander</span><span class="pill g">correlate_alerts</span></div></div></div>
+    <div class="step"><div class="card"><div class="num">3</div><b>Open it and split the work</b>
+      <span>Declares INC-301 and writes two Task nodes, one for each worker.</span>
+      <div class="who-line"><span class="pill c">Commander</span><span class="pill g">delegate</span></div></div></div>
+    <div class="step"><div class="card"><div class="num">4</div><b>Investigate in parallel</b>
+      <span><b style="display:inline;font-size:13.5px;color:var(--i)">Investigator:</b> $5.38M ARR exposed; Sarah fixed it before.
+        <b style="display:inline;font-size:13.5px;color:var(--h)">Historian:</b> INC-142 in March, runbook RB-7, "don't restart the database".</span>
+      <div class="who-line"><span class="pill i">Investigator</span><span class="pill h">Historian</span></div></div></div>
+    <div class="step last"><div class="card"><div class="num">5</div><b>A checked answer</b>
+      <span>Plain words first, then cause, impact, who to call and what not to do. All 9 cited ids exist in the graph.</span>
+      <div class="who-line"><span class="pill c">Commander</span><span class="pill g">citation check</span></div></div></div>
+
+    <div class="step human"><div class="card"><div class="num">6</div><b>You approve the page and the fix</b>
+      <span>Page Sarah, who fixed this before, then apply RB-7: 12 alarms clear, the unrelated one stays, recovery verified.</span>
+      <div class="who-line"><span class="pill you">you: Approve</span></div></div></div>
+    <div class="step"><div class="card"><div class="num">7</div><b>You teach it</b>
+      <span>"Reconnect the pool, don't pause it at peak." Saved as a Lesson; RB-7-v2 is proposed.</span>
+      <div class="who-line"><span class="pill c">Commander</span><span class="pill g">record_lesson</span></div></div></div>
+    <div class="step human"><div class="card"><div class="num">8</div><b>You approve the new fix</b>
+      <span>RB-7-v2 <code>SUPERSEDES</code> RB-7. Until you approve, the agents keep using RB-7.</span>
+      <div class="who-line"><span class="pill you">you: Approve</span></div></div></div>
+    <div class="step"><div class="card"><div class="num">9</div><b>Keep the map current</b>
+      <span>Paste "Sarah is moving to the Data team". The old team link gets an end date, linked to your text.</span>
+      <div class="who-line"><span class="pill you">you: Add knowledge</span></div></div></div>
+    <div class="step last"><div class="card"><div class="num">10</div><b>Next time, it knows</b>
+      <span>A new conversation weeks later uses RB-7-v2 straight away, and knows Sarah is now on the Data team.</span>
+      <div class="who-line"><span class="pill h">Historian</span><span class="pill g">recall_memory</span></div></div></div>
+  </div>
+
+  <div class="loop"><i>↺</i><span><b>Memory lives in the graph, not in a chat window.</b> Lessons, runbook versions and every
+    step of every conversation are nodes, so they survive restarts and can be traced back to where they came from.</span></div>
+  <div class="legend"><span class="pill c">Commander</span><span class="pill i">Investigator</span><span class="pill h">Historian</span>
+    <span class="pill you">you decide</span><span class="pill g">graph tool</span></div>
+</section>
+
+</body>
+</html>

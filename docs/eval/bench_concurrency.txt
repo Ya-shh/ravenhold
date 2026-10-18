@@ -1,0 +1,28 @@
+100 conversations at once (5 sandboxes x 20), tools via mcp, FalkorDB local Docker on arm64 Darwin
+wall time 3.01 s · 1600 graph operations (600 reads, 1000 writes) · 532 ops/s · GRAPH.COPY 117 ms per sandbox · failures: 0
+| Operation | Count | p50 ms | p95 ms | max ms |
+|---|---|---|---|---|
+| read: blast_radius | 100 | 1276 | 1447 | 1455 |
+| read: find_experts | 100 | 635 | 1121 | 1278 |
+| read: get_runbook | 100 | 407 | 625 | 631 |
+| read: recall_memory | 100 | 615 | 1067 | 1195 |
+| read: root_cause_candidates | 100 | 396 | 621 | 629 |
+| read: similar_incidents | 100 | 1287 | 1453 | 1466 |
+| write: Task handoff | 200 | 1 | 9 | 17 |
+| write: declare_incident | 100 | 173 | 757 | 821 |
+| write: record_lesson (own) | 100 | 81 | 159 | 168 |
+| write: record_lesson (shared) | 100 | 107 | 144 | 193 |
+| write: session | 100 | 25 | 48 | 58 |
+| write: task result + Episode | 200 | 62 | 134 | 176 |
+| write: turn | 200 | 2 | 13 | 46 |
+| Check (per sandbox) | Expected | Got |
+|---|---|---|
+| duplicate ids | 0 | 0 ✅ |
+| incidents (unique) | 20 | 20 ✅ |
+| tasks done with Episode | 40 | 40 ✅ |
+| shared lesson nodes | 1 | 1 ✅ |
+| shared lesson reinforced | 19 | 19 ✅ |
+| own lessons | 20 | 20 ✅ |
+| turns | 40 | 40 ✅ |
+| other sandboxes' lessons visible | 0 | 0 ✅ |
+ALL CHECKS PASSED
